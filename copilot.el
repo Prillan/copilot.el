@@ -63,6 +63,10 @@ Enabling event logging may slightly affect performance."
   :group 'copilot
   :type 'string)
 
+(defcustom copilot-npm-executable (executable-find "npm")
+  "Npm executable path."
+  :group 'copilot
+  :type 'string)
 
 (defcustom copilot-max-char 100000
   "Maximum number of characters to send to Copilot, -1 means no limit."
@@ -998,7 +1002,7 @@ command that triggered `post-command-hook'."
 (defun copilot-install-server ()
   "Interactively install server."
   (interactive)
-  (if-let ((npm-binary (executable-find "npm")))
+  (if-let ((npm-binary copilot-npm-executable))
       (progn
         (make-directory copilot-install-dir 'parents)
         (copilot-async-start-process
